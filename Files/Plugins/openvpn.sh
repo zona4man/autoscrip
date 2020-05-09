@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Script Created by John Ford Sangalang <exodia090@gmail.com>
+# Script Created by mastoni <afathoni1@gmail.com>
 
 # extract ip address
 if [ -z "$1" ]; then
@@ -17,7 +17,7 @@ echo
 echo "Note: m.facebook.com payload is example."
 echo
 else
-IPADDRESS=`ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{print $1}' | head -1`
+IPADDRESS=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 IPADD="s/ipaddresxxx/$IPADDRESS/g";
 # clean repo
 apt-get clean
@@ -45,11 +45,11 @@ mkdir /etc/openvpn/easy-rsa/keys
 sed -i 's|export KEY_COUNTRY="US"|export KEY_COUNTRY="PH"|' /etc/openvpn/easy-rsa/vars
 sed -i 's|export KEY_PROVINCE="CA"|export KEY_PROVINCE="TAR"|' /etc/openvpn/easy-rsa/vars
 sed -i 's|export KEY_CITY="SanFrancisco"|export KEY_CITY="Tarlac City"|' /etc/openvpn/easy-rsa/vars
-sed -i 's|export KEY_ORG="Fort-Funston"|export KEY_ORG="JohnFordTV"|' /etc/openvpn/easy-rsa/vars
-sed -i 's|export KEY_EMAIL="me@myhost.mydomain"|export KEY_EMAIL="exodia090@gmail.com"|' /etc/openvpn/easy-rsa/vars
-sed -i 's|export KEY_OU="MyOrganizationalUnit"|export KEY_OU="JohnFordTV"|' /etc/openvpn/easy-rsa/vars
-sed -i 's|export KEY_NAME="EasyRSA"|export KEY_NAME="JohnFordTV"|' /etc/openvpn/easy-rsa/vars
-sed -i 's|export KEY_OU=changeme|export KEY_OU=JohnFordTV|' /etc/openvpn/easy-rsa/vars
+sed -i 's|export KEY_ORG="Fort-Funston"|export KEY_ORG="mastoni"|' /etc/openvpn/easy-rsa/vars
+sed -i 's|export KEY_EMAIL="me@myhost.mydomain"|export KEY_EMAIL="afathoni1@gmail.com"|' /etc/openvpn/easy-rsa/vars
+sed -i 's|export KEY_OU="MyOrganizationalUnit"|export KEY_OU="mastoni"|' /etc/openvpn/easy-rsa/vars
+sed -i 's|export KEY_NAME="EasyRSA"|export KEY_NAME="mastoni"|' /etc/openvpn/easy-rsa/vars
+sed -i 's|export KEY_OU=changeme|export KEY_OU=mastoni|' /etc/openvpn/easy-rsa/vars
 # create diffie-helman pem
 openssl dhparam -out /etc/openvpn/dh1024.pem 1024
 # create pki
@@ -197,7 +197,7 @@ refresh_pattern ^ftp: 1440 20% 10080
 refresh_pattern ^gopher: 1440 0% 1440
 refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
 refresh_pattern . 0 20% 4320
-visible_hostname JohnFordTV
+visible_hostname mastoni
 END
 sed -i $IPADD /etc/squid/squid.conf;
 # setting iptables
@@ -261,7 +261,7 @@ echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 sed -i '$ i\echo "nameserver 8.8.8.8" > /etc/resolv.conf' /etc/rc.local
 sed -i '$ i\echo "nameserver 8.8.4.4" >> /etc/resolv.conf' /etc/rc.local
 # set time GMT +8
-ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 # setting ufw
 ufw allow ssh
 ufw allow 1194/tcp
@@ -295,7 +295,7 @@ service openvpn stop
 service openvpn start
 # create openvpn account
 useradd openvpn
-echo "openvpn:fordsenpai" | chpasswd
+echo "openvpn:mastoni" | chpasswd
 clear
 echo "######### Download your config files here! #########"
 echo "~> http://$IPADDRESS/openvpn.ovpn - Normal config"
@@ -306,7 +306,7 @@ echo "######### Download your config files here! #########"
 echo
 echo "################# OpenVPN Account ##################"
 echo "~> Username: openvpn"
-echo "~> Password: fordsenpai"
+echo "~> Password: mastoni"
 echo "################# OpenVPN Account ##################"
 echo
 echo "######### To Add OpenVPN User Account ##############"

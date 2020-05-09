@@ -1,9 +1,9 @@
 #!/bin/bash
 # JohnFordTV
-# https://github.com/johndesu090/AutoScriptDB
+# https://github.com/zona4man/autoscrip
 
 PUBLIC_INTERFACE="$(ip -4 route ls | grep default | grep -Po '(?<=dev )(\S+)' | head -1)"
-PUBLIC_IP_ADDRESS="$(curl -4sL http://ipinfo.io/ip || wget -4qO- http://ipinfo.io/ip)"
+PUBLIC_IP_ADDRESS="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0')"
 
 if [[ ! -e /etc/openvpn/server.conf ]]; then
  echo -e "Missing OpenVPN Server config, exiting..."
